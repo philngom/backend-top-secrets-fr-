@@ -11,4 +11,8 @@ describe('backend-top-secrets-fr routes', () => {
   afterAll(() => {
     pool.end();
   });
+
+  it('should create a user', async () => {
+    const res = request(app).post('/api/v1/users').send({})
+  })
 });
