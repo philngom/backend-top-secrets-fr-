@@ -11,7 +11,9 @@ CREATE TABLE secrets (
 );
 
 CREATE TABLE users (
+  id GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
   first_name TEXT,
   last_name TEXT,
   email TEXT NOT NULL,
+  password TEXT NOT NULL
 );
