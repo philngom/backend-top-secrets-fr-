@@ -13,6 +13,17 @@ describe('backend-top-secrets-fr routes', () => {
   });
 
   it('should create a user', async () => {
-    const res = request(app).post('/api/v1/users').send({})
+    const res = request(app).post('/api/v1/users').send({
+      firstName: 'Jim',
+      lastName: 'Burton',
+      email: 'jb@defense.gov'
+    });
+
+    expect(res.body).toEqual({
+      id: expect.any(String),
+      firstName: 'Jim',
+      lastName: 'Burton',
+      email: 'jb@defense.gov'
+    })
   })
 });
