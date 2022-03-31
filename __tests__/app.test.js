@@ -65,7 +65,7 @@ describe('backend-top-secrets-fr routes', () => {
       id: expect.any(String),
       title: 'definition of secret',
       description: 'to be kept from knowledge or view',
-      created_at: expect.any(String)
-    })
-  }
+      createdAt: expect.any(String)
+    });
+  });
 });
