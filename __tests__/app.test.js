@@ -2,7 +2,7 @@ const pool = require('../lib/utils/pool');
 const setup = require('../data/setup');
 const request = require('supertest');
 const app = require('../lib/app');
-const userService = require('../lib/services/UserService');
+const UserService = require('../lib/services/UserService');
 
 const mockUser = {
   firstName: 'Jim',
@@ -16,7 +16,7 @@ const registerAndLogin = async (userProps = {}) => {
 
   const agent = request.agent(app);
 
-  const user = await userService.create({ ...mockUser, ...userProps });
+  const user = await UserService.create({ ...mockUser, ...userProps });
 
   const { email } = user;
   await agent.post('/api/v1/users/session').send({ email, password });
@@ -40,11 +40,10 @@ describe('backend-top-secrets-fr routes', () => {
       firstName: 'Jim',
       lastName: 'Burton',
       email: 'jb@defense.gov',
-      password: '123456'
     });
   });
 
-  it('returns the current user', async () => {
+  it.only('returns the current user', async () => {
     const [agent, user] = await registerAndLogin();
     const me = await agent.get('/api/v1/users/me');
 
