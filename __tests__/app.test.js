@@ -46,6 +46,7 @@ describe('backend-top-secrets-fr routes', () => {
   it.only('returns the current user', async () => {
     const [agent, user] = await registerAndLogin();
     const me = await agent.get('/api/v1/users/me');
+    console.log('🚀 ~ file: app.test.js ~ line 49 ~ it.only ~ me', me.body);
 
     expect(me.body).toEqual({
       ...user,
