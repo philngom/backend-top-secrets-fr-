@@ -43,15 +43,29 @@ describe('backend-top-secrets-fr routes', () => {
     });
   });
 
-  it.only('returns the current user', async () => {
+  it('returns the current user', async () => {
     const [agent, user] = await registerAndLogin();
     const me = await agent.get('/api/v1/users/me');
-    console.log('🚀 ~ file: app.test.js ~ line 49 ~ it.only ~ me', me.body);
-
     expect(me.body).toEqual({
       ...user,
       exp: expect.any(Number),
       iat: expect.any(Number)
     });
   });
+
+  it('should create a new secret', async () => {
+    const [agent, user] = await registerAndLogin();
+
+    const res = await agent.post('/api/v1/secrets').send({
+      title: 'definition of secret',
+      description: 'to be kept from knowledge or view'
+    });
+
+    expect(res.body).toEqual({
+      id: expect.any(String),
+      title: 'definition of secret',
+      description: 'to be kept from knowledge or view',
+      created_at: expect.any(String)
+    })
+  }
 });
