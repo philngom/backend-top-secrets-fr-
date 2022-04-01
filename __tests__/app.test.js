@@ -53,7 +53,7 @@ describe('backend-top-secrets-fr routes', () => {
     });
   });
 
-  it('should create a new secret', async () => {
+  it('should create a new secret when a user is signed in, 401 message when not signed in', async () => {
     const [agent] = await registerAndLogin();
 
 
@@ -78,7 +78,7 @@ describe('backend-top-secrets-fr routes', () => {
     expect(res.body).toEqual({ message: 'You must be signed in to continue', status: 401 });
   });
 
-  it('should be able to view secrets', async () => {
+  it('should be able to view secrets if signed in, 401 message when not signed in', async () => {
     const [agent] = await registerAndLogin();
 
     await agent.post('/api/v1/secrets').send({
@@ -98,6 +98,14 @@ describe('backend-top-secrets-fr routes', () => {
     res = await request(app).post('/api/v1/secrets');
 
     expect(res.body).toEqual({ message: 'You must be signed in to continue', status: 401 });
+  });
+
+  it('should log out user', async () => {
+    const [agent] = await registerAndLogin();
+
+    const res = await agent.delete('/api/v1/users/sessions');
+
+    expect(res.body).toEqual({ success: true, message: 'You have successfully signed out!' });
   });
 });
 
