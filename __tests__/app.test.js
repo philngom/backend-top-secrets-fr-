@@ -54,9 +54,11 @@ describe('backend-top-secrets-fr routes', () => {
   });
 
   it('should create a new secret', async () => {
-    const [agent, user] = await registerAndLogin();
+    const [agent] = await registerAndLogin();
 
-    const res = await agent.post('/api/v1/secrets').send({
+
+
+    let res = await agent.post('/api/v1/secrets').send({
       title: 'definition of secret',
       description: 'to be kept from knowledge or view'
     });
@@ -67,5 +69,12 @@ describe('backend-top-secrets-fr routes', () => {
       description: 'to be kept from knowledge or view',
       createdAt: expect.any(String)
     });
+
+    res = await request(app).post('/api/v1/secrets').send({
+      title: 'definition of secret',
+      description: 'to be kept from knowledge or view'
+    });
+
+    expect(res.body).toEqual({ message: 'You must be signed in to add a secret', status: 401 });
   });
 });
