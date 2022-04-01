@@ -78,7 +78,7 @@ describe('backend-top-secrets-fr routes', () => {
     expect(res.body).toEqual({ message: 'You must be signed in to continue', status: 401 });
   });
 
-  it('should be able to view secrets when signed in', async () => {
+  it('should be able to view secrets', async () => {
     const [agent] = await registerAndLogin();
 
     await agent.post('/api/v1/secrets').send({
@@ -86,7 +86,7 @@ describe('backend-top-secrets-fr routes', () => {
       description: 'to be kept from knowledge or view'
     });
 
-    const res = await agent.get('/api/v1/secrets');
+    let res = await agent.get('/api/v1/secrets');
 
     expect(res.body).toEqual([{
       id: expect.any(String),
@@ -95,6 +95,9 @@ describe('backend-top-secrets-fr routes', () => {
       createdAt: expect.any(String)
     }]);
 
+    res = await request(app).post('/api/v1/secrets');
+
+    expect(res.body).toEqual({ message: 'You must be signed in to continue', status: 401 });
   });
 });
 
