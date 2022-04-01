@@ -75,6 +75,6 @@ describe('backend-top-secrets-fr routes', () => {
       description: 'to be kept from knowledge or view'
     });
 
-    expect(res.body).toEqual({ message: 'You must be signed in to add a secret', status: 401 });
+    expect(res.body).toEqual({ message: 'You must be signed in to continue', status: 401 });
   });
 });
